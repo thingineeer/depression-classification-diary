@@ -1,6 +1,7 @@
 # depression-classification-diary
 Interactive diary about depression disorder classification with Deep learning
 
+<<<<<<< Updated upstream
 ## Dataset Profile 
 
 ### e.g.)
@@ -23,3 +24,13 @@ Interactive diary about depression disorder classification with Deep learning
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/50198431/182772565-9d8800b6-d644-4972-bfa9-a8c30ff3d8de.png">
 
 <hr>
+=======
+## Dataset Profile
+ *  'persona-id': 'Pro_07398',
+ *  'persona': {'persona-id': 'A03_G01_C01',
+ *  'human': ['A03', 'G01'],
+ *  'computer': ['C01']},
+ *  'emotion': {'emotion-id': 'S10_D02_E27',
+ *  'type': 'E27',
+ *   'situation': ['S10', 'D02']}
+>>>>>>> Stashed changes
