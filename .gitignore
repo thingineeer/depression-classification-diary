@@ -129,4 +129,8 @@ dmypy.json
 .pyre/
 
 # Dataset
-Dataset/
+Dataset/Training/
+Dataset/Validation/
+
+# Documents
+docs/
