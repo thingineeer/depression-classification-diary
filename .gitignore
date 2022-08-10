@@ -135,3 +135,14 @@ Dataset/
 
 # Documents
 docs/
+
+# model
+./model_output/optimizer.pt
+./model_output/pytorch_model.bin
+./model_output/scheduler.pt
+./model_output/rng_state.pth
+./model_output/training_args.bin
+
+# tokenizer
+./tokenizer/tokenizer.json
+./vocab.txt
