@@ -131,6 +131,7 @@ dmypy.json
 # Dataset
 Dataset/Training/
 Dataset/Validation/
+Dataset/
 
 # Documents
 docs/
