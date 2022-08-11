@@ -146,3 +146,6 @@ docs/
 # tokenizer
 ./tokenizer/tokenizer.json
 ./vocab.txt
+
+# id
+SECRETS.json
