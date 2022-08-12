@@ -3,45 +3,36 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity,euclidean_distances,pairwise_distances
 
-df = pd.read_csv("Trans_Name.csv")
 
-tfidfvect = TfidfVectorizer()
-dtm = tfidfvect.fit_transform(df["Tran_Name"])
-
-def cosine_ver(target):
-    target_dtm = tfidfvect.transform([target])
-    cosine_matrix = cosine_similarity(target_dtm, dtm)
-    df_cosine = pd.DataFrame(cosine_matrix)
-    print(df.loc[df_cosine.loc[0].argmax()])
-    
+class Emoji_similarlity():
+    def __init__(self):
+        self.df = pd.read_csv("./Dataset/Trans_Name.csv")
+        self.tfidfvect = TfidfVectorizer(analyzer="char_wb", ngram_range=(1,4))
+        self.dtm = self.tfidfvect.fit_transform(self.df["Tran_Name"])
 
 
+    def cosine_ver(self, target):
+        target_dtm = self.tfidfvect.transform([target])
+        df_cos = pd.DataFrame(cosine_similarity(self.dtm, target_dtm), columns=["cosine_ver"])
 
-def euclidean_ver(target):
-    target_dtm = tfidfvect.transform([target])
-    ec_matrix = 1 / euclidean_distances(target_dtm, dtm)
-    df_ec = pd.DataFrame(ec_matrix)
-    print(df.loc[df_ec.loc[0].argmax()])
-    
+        return(pd.concat([self.df, df_cos], axis=1).nlargest(10, "cosine_ver"))
 
 
+    def euclidean_ver(self, target):
+        target_dtm = self.tfidfvect.transform([target])
+        df_cos = pd.DataFrame(cosine_similarity(self.dtm, target_dtm), columns=["cosine_ver"])
 
-def jaccard_ver(target):
-    target_dtm = tfidfvect.transform([target])
-    jac_matrix = 1 - pairwise_distances(dtm.toarray(), metric="jaccard")
-    df_jc = pd.DataFrame(jac_matrix)
-    print(df.loc[df_jc.loc[0].argmax()])
-    
+        return(pd.concat([self.df, df_cos], axis=1).nlargest(10, "cosine_ver"))
 
 
-def pearson_ver(target):
-    target_dtm = tfidfvect.transform([target])
-    pearson_matrix = np.corrcoef(dtm.toarray())
-    df_ps = pd.DataFrame(pearson_matrix)
-    print(df.loc[df_ps.loc[0].argmax()])
-    
+    def jaccard_ver(self, target):
+        target_dtm = self.tfidfvect.transform([target])
+        df_cos = pd.DataFrame(1 - pairwise_distances(self.dtm.toarray(), metric="jaccard"))
 
-cosine_ver("웃는")
-euclidean_ver("웃는")
-jaccard_ver('웃는')
-pearson_ver('웃는')
+        return(pd.concat([self.df, df_cos], axis=1).nlargest(10, "cosine_ver"))
+
+    def pearson_ver(self, target):
+        target_dtm = self.tfidfvect.transform([target])
+        df_cos = pd.DataFrame(np.corrcoef(self.dtm.toarray()))
+
+        return(pd.concat([self.df, df_cos], axis=1).nlargest(10, "cosine_ver"))

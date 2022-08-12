@@ -7,6 +7,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from konlpy.tag import Mecab
 
+from emoji_similarlity import Emoji_similarlity
+
 
 model = AutoModelForSequenceClassification.from_pretrained("model_output_KcElectra")
 tokenizer = AutoTokenizer.from_pretrained("tokenizer_KcElectra")
@@ -29,6 +31,8 @@ def char_predict(tokenized_sent):
     token = tokenizer.convert_ids_to_tokens([int(char) for char in tokenized_sent["input_ids"][0]][1:-1])
     pos = mecab.pos(''.join(token))
 
+    emoji_sim = Emoji_similarlity()
+
     for pos_info in pos:
         if pos_info[1] not in ["JKS","JKC","JKG","JKO","JKB","JKV","JKQ","JX","JC","EP","EF","EC","ETN","ETM","SF","SE","SSO","SSC","SC","SY"]:
             
@@ -46,6 +50,7 @@ def char_predict(tokenized_sent):
             result = pass_model(token_char)
             if result == 0:
                 print(f"악성 : {pos_info[0]}")
+                print(emoji_sim.cosine_ver(pos_info[0]))
         else:
             continue
             
