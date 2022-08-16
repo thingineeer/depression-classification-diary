@@ -1,6 +1,5 @@
 import os
 from itertools import combinations
-import re
 
 import pandas as pd
 import numpy as np
@@ -15,7 +14,7 @@ model = AutoModelForSequenceClassification.from_pretrained("model_output_KcElect
 tokenizer = AutoTokenizer.from_pretrained("tokenizer_KcElectra")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 mecab = Mecab()
-TAG_LIST = ["JKS","JKC","JKG","JKO","JKB","JKV","JKQ","JX","JC","EP","EF","EC","ETN","ETM","SF","SE","SSO","SSC","SC","SY"]
+TAG_LIST = ["JKS","JKC","JKG","JKO","JKB","JKV","JKQ","JX","JC","EP","EF","EC","ETN","ETM","SF","SE","SSO","SSC","SC","SY", "VV"]
 
 
 def pass_model(token):
@@ -62,14 +61,30 @@ def word_predict_with_mask(tokenized_sent):
     pos = [mecab.pos(pos_of_token) for pos_of_token in token]
 
     ids_to_check = []
-    [ids_to_check.append(tokenizer.convert_tokens_to_ids(pos_info[0][0])) for pos_info in pos if pos_info[0][1] not in TAG_LIST]
+    new_pos = []
+    for pos_info in pos:
+        if len(pos_info) > 1:
+            for pos_info_2 in pos_info:
+                new_pos.append([pos_info_2])
+        else:
+            new_pos.append(pos_info)
+
+    pos_without_tag_list = []
+    [pos_without_tag_list.append(pos_info[0][0]) for pos_info in new_pos if pos_info[0][1] not in TAG_LIST]
+
+    for token_item in token:
+        for huh in pos_without_tag_list:
+            if token_item == huh or token_item == "##"+huh:
+                ids_to_check.append(tokenizer.convert_tokens_to_ids(token_item))
+
+    # [ids_to_check.append(tokenized_sent["input_ids"][0][pos_idx+1]) for pos_idx in range(len(pos_without_tag_list))]
 
     ids_combination = []  # word to mask
     for i in range(1, len(ids_to_check)+1):
         ids_combination.extend(combinations(ids_to_check,i))
-        
-    for mask in ids_combination:
 
+    print(ids_combination)
+    for mask in ids_combination:
         origin = {}
         for idx in range(len(tokenized_sent["input_ids"][0])):
             if tokenized_sent["input_ids"][0][idx] in mask:
@@ -87,7 +102,8 @@ def word_predict_with_mask(tokenized_sent):
                 tokenized_sent["input_ids"][0][idx] = origin[idx]
             continue
 
-    return "경로를 벗어났습니다 이거 에러에요 확인하세요"
+    # print(tokenizer.convert_ids_to_tokens([int(word) for word in tokenized_sent["input_ids"][0]]))
+    return "경로를 벗어났습니다 이거 에러에요 확인하세요" # 
         
 
 def sentence_predict(sent):
