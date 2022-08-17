@@ -13,7 +13,7 @@
 
 <hr>
 
-## CONTENT
+## 😌CONTENT😌
 
 우리는 바람직한 인터넷 문화를 만들고자 합니다.
 
@@ -22,26 +22,49 @@
 그래서 우리는 댓글 속 비적절한 단어를 적절하게 바꿀 필요가 있다고 생각했습니다.
 단순히 부정적인 댓글을 지우거나 ** 처리하는 것이 아니라 해당 단어를 상응하는 이모지로 변경함으로써 사용자에게 사소한 재미를 제공하고자 합니다.
 
-## Using model
+<hr>
 
-"beomi/KcELECTRA-base" - HUGGINGFACE
+## 🚃Initial model🚃
+| Classification | KcElectra | KoBERT | RoBERTa-base | RoBERTa-large |
+| --- | --- | --- | --- | --- |
+| Validation Accuracy | 0.88680 | 0.85721 | 0.83421 | 0.86994 |
+| Validation Loss | 1.00431 | 1.23237 | 1.30012 | 1.16179 |
+| Training Loss | 0.09908 | 0.03761 | 0.0039 | 0.06255 |
+| Epoch | 10 | 40 | 20 | 20 |
+| Batch-size | 8 | 32 | 16 | 32 |
+| learning rate  | 2e-06 | 5e-5 | 2e-06 | 5e-6 |
+| pretrained-model | beomi/KcELECTRA-base | skt/kobert-base-v1 | xlm-roberta-base | klue/roberta-large |
 
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/50198431/183795775-a265070f-9b62-49c4-8341-d2650b4e67b2.png">
+<hr>
 
-## DATASET
+## 💿DATASET💿
 
-Smilegate-AI
+* Smilegate-AI / https://github.com/smilegate-ai/korean_unsmile_dataset
 
-<img width="400" alt="image" src="https://user-images.githubusercontent.com/50198431/183796088-59c55359-8307-48f2-b742-6d2fcd77162f.png">
+* naver 뉴스 기사 크롤링
 
-https://github.com/smilegate-ai/korean_unsmile_dataset
+## 🛠Used API🛠
 
-```python
-pd.read_csv("unsmile_train_v1.0.tsv", sep="\t").head()
-```
-<img width="1037" alt="image" src="https://user-images.githubusercontent.com/50198431/183796197-76e0ed1b-71f9-45a9-ba31-fe89e71ce15d.png">
+* naver papago
+* google translator
 
+## 👨🏻‍💻What we've done👨🏻‍💻
+- [x] 모델 선정 -> Fine tuning
+- [x] pseudo labeling
+- [x] masking the cursing words to predict which word is bad
+- [x] binary classification for each comments
+- [x] multi classification for each comments
+- [x] calculation speed inhanced -> put batchs, split the sentences /.....
+- [x] similarity(early deprecated😂)
+- [x] pos tagging(also early deprecated...😂)
+- [x] scaling
 
-## HOW TO 
+## TODO
+- [ ] substitute cursing word with emoji
+- [ ] increasing the model accuracy with hyperparameter tuning(Wandb)
+- [ ] add more data with pseudo labeling
+- [ ] launch server
 
-## REFERENCE
+## 🙋🏻HOW TO 🙋🏻
+
+## 🔥REFERENCE🔥
