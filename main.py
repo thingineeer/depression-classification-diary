@@ -157,9 +157,17 @@ def word_predict_with_mask_without_mecab(tokenized_sent):
         for word in temp_mask:
             if(temp_output[1] > T):
                 token_count[word] += 1 
-    
     scaled_count_values =  mmscaler.fit_transform(np.array(list(token_count.values())).reshape(-1,1))
 
+    mmerror = True
+    for scaled_count_value in scaled_count_values:
+        if scaled_count_value > 0:
+            mmerror = False
+            break
+    if mmerror == True:
+        return curse_word_to_emoji(tokenizer.convert_ids_to_tokens(token_count.keys()))
+
+            
     MMT = 0.5
     token_to_mask = []
     [token_to_mask.append(list(token_count.keys())[idx]) for idx in range(len(scaled_count_values)) if scaled_count_values[idx] >= MMT]
@@ -186,6 +194,7 @@ def sentence_multi_classification(mask_word):
         max_length=512,
         add_special_tokens=False,
     )
+
     multi_model.eval()
     with torch.no_grad():
         output = multi_model(**mask_word)
@@ -282,7 +291,6 @@ def sentence_predict(sent, triger):
     if result == 0:
         triger += 1
         return word_predict_with_mask_without_mecab(tokenized_sent), triger
-        # return word_predict_with_mask(tokenized_sent)
 
     else:
         return sent, triger
