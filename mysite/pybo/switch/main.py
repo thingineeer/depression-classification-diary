@@ -16,16 +16,18 @@ from sklearn.preprocessing import MinMaxScaler
 
 # from emoji_similarlity import Emoji_similarlity
 
+# 절대 경로 설정?
 
-model = AutoModelForSequenceClassification.from_pretrained("model_output_KcElectra")
-multi_model = AutoModelForSequenceClassification.from_pretrained("multi_classification")
-tokenizer = AutoTokenizer.from_pretrained("tokenizer_KcElectra")
-emoji = pd.read_csv("emoji_category.csv")
+BASE_PATH = "/Users/sabin/Documents/GitHub/switch-negative-word/mysite/pybo/switch"
+model = AutoModelForSequenceClassification.from_pretrained(BASE_PATH + "/model_output_KcElectra")
+multi_model = AutoModelForSequenceClassification.from_pretrained(BASE_PATH + "/multi_classification")
+tokenizer = AutoTokenizer.from_pretrained(BASE_PATH + "/tokenizer_KcElectra")
+emoji = pd.read_csv("/Users/sabin/Documents/GitHub/switch-negative-word/mysite/pybo/switch/emoji_category.csv")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 mecab = Mecab()
 TAG_LIST = ["JKS","JKC","JKG","JKO","JKB","JKV","JKQ","JX","JC","EP","EF","EC","ETN","ETM","SF","SE","SSO","SSC","SC","SY", "VV"]
 mmscaler = MinMaxScaler()
-# random.seed(0)
+
 
 def pass_model(token):
     with torch.no_grad():
@@ -35,6 +37,9 @@ def pass_model(token):
     result = np.argmax(logits, axis=-1)
 
     return result
+
+#TODO 애매한 표현을 찾아서 문장 뒤에 웃는 이모지 추가 가능 DEMO
+# def pass_model_mediocre(token):
 
 
 def pass_model_for_mask(masked_loader):
@@ -78,7 +83,7 @@ def word_predict(tokenized_sent):
     token = tokenizer.convert_ids_to_tokens([int(word) for word in tokenized_sent["input_ids"][0]][1:-1])
     pos = mecab.pos(''.join(token))
 
-    emoji_sim = Emoji_similarlity()
+    # emoji_sim = Emoji_similarlity()
 
     for pos_info in pos:
         if pos_info[1] not in TAG_LIST:
