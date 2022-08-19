@@ -58,12 +58,14 @@
 - [x] similarity(early deprecated😂)
 - [x] pos tagging(also early deprecated...😂)
 - [x] scaling
+- [x] substitute cursing word with emoji
+- [x] add more data with pseudo labeling
+- [x] launch server with django
 
 ## TODO
-- [ ] substitute cursing word with emoji
 - [ ] increasing the model accuracy with hyperparameter tuning(Wandb)
 - [ ] add more data with pseudo labeling
-- [ ] launch server
+- [ ] deploy server
 
 ## 🙋🏻HOW TO 🙋🏻
 
