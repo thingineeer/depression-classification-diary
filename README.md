@@ -67,4 +67,6 @@
 
 ## 🙋🏻HOW TO 🙋🏻
 
+https://user-images.githubusercontent.com/50198431/185527881-5c4756e1-f201-47cd-9f66-162599304de3.mov
+
 ## 🔥REFERENCE🔥
