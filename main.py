@@ -78,7 +78,7 @@ def word_predict(tokenized_sent):
     token = tokenizer.convert_ids_to_tokens([int(word) for word in tokenized_sent["input_ids"][0]][1:-1])
     pos = mecab.pos(''.join(token))
 
-    emoji_sim = Emoji_similarlity()
+    #emoji_sim = Emoji_similarlity()
 
     for pos_info in pos:
         if pos_info[1] not in TAG_LIST:

@@ -13,10 +13,8 @@ URL = "https://openapi.naver.com/v1/papago/n2mt"
 client_id = client_id
 client_secret = client_secret
 
-def main():
-    text = "hello hi hi i'm papago"
-    source = 'en'
-    target = 'ko'
+
+def translate(source, target, text):
 
     encText = urllib.parse.quote(text)
     data = f"source={source}&target={target}&text=" + encText
@@ -26,13 +24,26 @@ def main():
     response = urllib.request.urlopen(request, data=data.encode("utf-8"))
     rescode = response.getcode()
 
-    if(rescode==200):
-        response_body = response.read()
-        decode = json.loads(response_body.decode('utf-8'))
-        result = decode['message']['result']['translatedText']
-        print(result)
-    else:
-        print("Error Code:" + rescode)
+    try:
+        if(rescode==200):
+            response_body = response.read()
+            decode = json.loads(response_body.decode('utf-8'))
+            result = decode['message']['result']['translatedText']
+            return result
+    
+    except:
+        raise Exception('Error Code:' + rescode)
+
+
+def main():
+    with open('./Dataset/emoji.csv', 'r') as f:
+        for line in f:
+            line = line.strip()
+            source, target, text = line.split(',')
+            translate(source, target, text)
+
+    translate('en', 'ko', '')
+
 
 if __name__ == "__main__":
     main()

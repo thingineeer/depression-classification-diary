@@ -10,7 +10,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
-from konlpy.tag import Mecab
+#from konlpy.tag import Mecab
 from pprint import pprint
 from sklearn.preprocessing import MinMaxScaler
 
@@ -24,7 +24,7 @@ multi_model = AutoModelForSequenceClassification.from_pretrained(BASE_PATH + "/m
 tokenizer = AutoTokenizer.from_pretrained(BASE_PATH + "/tokenizer_KcElectra")
 emoji = pd.read_csv("/Users/sabin/Documents/GitHub/switch-negative-word/mysite/pybo/switch/emoji_category.csv")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-mecab = Mecab()
+# mecab = Mecab()
 TAG_LIST = ["JKS","JKC","JKG","JKO","JKB","JKV","JKQ","JX","JC","EP","EF","EC","ETN","ETM","SF","SE","SSO","SSC","SC","SY", "VV"]
 mmscaler = MinMaxScaler()
 
