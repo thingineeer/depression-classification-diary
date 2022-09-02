@@ -66,6 +66,11 @@
 - [ ] increasing the model accuracy with hyperparameter tuning(Wandb)
 - [ ] add more data with pseudo labeling
 - [ ] deploy server
+- [ ] expand to another task using mask
+- [ ] add neologism to vocab -> which could increase 7~8% accuracy
+- [ ] use light model / SOTA
+- [ ] Teacher student learning
+- [ ] transfer learning not the parameter but the experience
 
 ## 🙋🏻HOW TO 🙋🏻
 
